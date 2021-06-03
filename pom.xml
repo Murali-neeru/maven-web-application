@@ -99,13 +99,13 @@
 	    <repository>
 	      <id>nexus</id>
 	      <name>Murali</name>
-	      <url>http://15.206.164.252:8081/repository/wallmart-release/</url>
+	      <url>http://13.233.116.145:8081/repository/wallmart-release/</url>
 	    </repository>
 	    
 	    <snapshotRepository>
 	      <id>nexus</id>
 	      <name>Murali</name>
-	      <url>http://15.206.164.252:8081/repository/Wallmart-snapshot/</url>
+	      <url>http://13.233.116.145:8081/repository/Wallmart-snapshot/</url>
 	    </snapshotRepository>
 	    
 	</distributionManagement>
