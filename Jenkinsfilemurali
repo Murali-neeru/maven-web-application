@@ -1,0 +1,39 @@
+node
+{
+    def mavenHome = tool name:"maven3.8.1"
+    
+    stage('checkoutforcode')
+    {
+      git branch: 'development', credentialsId: 'e9859dc2-f718-4644-9203-d5ba096951e1', url: 'https://github.com/Murali-neeru/maven-web-application.git'
+    }
+    
+    stage("build")
+    {
+ sh "${mavenHome}/bin/mvn clean package"
+    }   
+  /* 
+   stage("executesonarqubereport")
+    {
+ sh "${mavenHome}/bin/mvn sonar:sonar"
+    }    
+    */
+    stage("uploadartifactintonexus")
+    {
+ sh "${mavenHome}/bin/mvn deploy"
+    } 
+    
+    stage("DeployAppintoTomcatserver")
+    {
+ sshagent(['bf041c14-5622-4fcb-917b-5e92f9eb2a1c']) {
+    sh "scp -o StrictHostkeyChecking=no target/maven-web-application.war ec2-user@172.31.9.21:/opt/tomcat-apache-9.0.45/webapps/"
+}
+    }
+    stage('sendemailnotification')
+    {
+    emailext body: '''Buildover
+
+Regards
+
+Muralidharan''', subject: 'Buildover - scripted way', to: 'kmd_neeru@yahoo.com'    
+    }
+}
